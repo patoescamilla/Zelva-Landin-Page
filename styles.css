@@ -454,7 +454,7 @@ nav {
 /* ── PROYECTOS ── */
 .proj-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(250px, 0.8fr);
+  grid-template-columns: minmax(0, 1.48fr) minmax(270px, 0.92fr);
   gap: 14px;
   align-items: start;
 }
