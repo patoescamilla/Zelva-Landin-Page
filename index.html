@@ -296,6 +296,46 @@
     heroVideo.addEventListener('loadedmetadata', setPlaybackRate);
   }
 
+  const mobileCards = document.querySelectorAll('.srv-card');
+  const mobileQuery = window.matchMedia('(max-width: 900px)');
+
+  const syncMobileCards = () => {
+    if (!mobileCards.length) return;
+
+    if (mobileQuery.matches) {
+      mobileCards.forEach((card, index) => {
+        if (!card.dataset.mobileReady) {
+          card.dataset.mobileReady = 'true';
+          card.tabIndex = 0;
+
+          card.addEventListener('click', () => {
+            if (!mobileQuery.matches) return;
+
+            const isOpen = card.classList.contains('is-open');
+            mobileCards.forEach((item) => item.classList.remove('is-open'));
+            if (!isOpen) card.classList.add('is-open');
+          });
+
+          card.addEventListener('keydown', (event) => {
+            if (!mobileQuery.matches) return;
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            card.click();
+          });
+        }
+      });
+
+      if (![...mobileCards].some((card) => card.classList.contains('is-open'))) {
+        mobileCards[0].classList.add('is-open');
+      }
+    } else {
+      mobileCards.forEach((card) => card.classList.remove('is-open'));
+    }
+  };
+
+  syncMobileCards();
+  mobileQuery.addEventListener('change', syncMobileCards);
+
   const heroParallax = document.querySelector('[data-parallax]');
   const heroVisual = document.querySelector('.hero-visual');
 
